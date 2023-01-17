@@ -27,6 +27,6 @@ contract PeepoRendererTest is DSTest {
 
     function testMintSeed() public {
         token.mint(5);
-        console.log("peepoToken.tokenToSeed(1):", uint256(token.tokenToSeed(5)));
+        console.log("peepoToken.tokenToSeed(1):", uint256(token.tokenSeed(5)));
     }
 }

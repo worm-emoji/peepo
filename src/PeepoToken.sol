@@ -9,7 +9,7 @@ contract PeepoToken is ERC721A, Ownable {
     address public rendererContract;
     bool public mintOpen;
     bytes32 public merkleRoot;
-    mapping(uint256 => bytes32) public tokenSeeds;
+    mapping(uint256 => bytes32) internal _tokenSeeds;
 
     error MintClosed();
     error NotAllowlisted();
@@ -51,7 +51,7 @@ contract PeepoToken is ERC721A, Ownable {
         // when tokens are minted, generate a seed for each token
         for (uint256 i = 0; i < quantity; i++) {
             uint256 tokenId = startTokenId + i;
-            tokenSeeds[tokenId] = keccak256(abi.encodePacked(block.difficulty, tokenId, msg.sender));
+            _tokenSeeds[tokenId] = keccak256(abi.encodePacked(block.difficulty, tokenId, msg.sender));
         }
     }
 
@@ -75,5 +75,10 @@ contract PeepoToken is ERC721A, Ownable {
     // View functions
     function tokenURI(uint256 tokenID) public view override (ERC721A) returns (string memory) {
         return IERC721A(rendererContract).tokenURI(tokenID);
+    }
+
+    function tokenSeed(uint256 tokenID) public view returns (bytes32) {
+        if (ownerOf(tokenID) == address(0)) revert URIQueryForNonexistentToken();
+        return _tokenSeeds[tokenID];
     }
 }
