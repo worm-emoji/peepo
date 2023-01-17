@@ -19,3 +19,7 @@
 	path = lib/base64
 	url = https://github.com/Brechtpd/base64
 	branch = v1.1.0
+[submodule "lib/ERC721A"]
+	path = lib/ERC721A
+	url = https://github.com/chiru-labs/ERC721A
+	branch = v4.2.3
