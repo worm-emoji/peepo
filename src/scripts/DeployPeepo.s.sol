@@ -19,7 +19,7 @@ contract DeployPeepoRenderer is Script {
 
         vm.startBroadcast(0x9aaC8cCDf50dD34d06DF661602076a07750941F6);
         PeepoRenderer pr = new PeepoRenderer(fileStore, "pp-part2.svg");
-        new PeepoToken(address(pr));
+        new PeepoToken(address(pr), bytes32(0));
         vm.stopBroadcast();
     }
 }

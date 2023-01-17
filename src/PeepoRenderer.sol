@@ -46,7 +46,7 @@ contract PeepoRenderer is Ownable {
                         Strings.toString(id),
                         '",',
                         '"image": "data:image/svg+xml;base64,',
-                        renderPeepo("3", "#ff0000"),
+                        renderPeepo(Strings.toString(id), "#ff0000"),
                         '"}'
                     )
                 )
