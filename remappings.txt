@@ -4,3 +4,4 @@ solmate/=lib/solmate/src/
 base64/=lib/base64/
 forge-std/=lib/forge-std/src
 ethfs/=lib/ethfs/packages/contracts/src
+ERC721A=lib/ERC721A/contracts

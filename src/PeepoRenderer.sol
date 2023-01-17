@@ -4,17 +4,20 @@ pragma solidity ^0.8.15;
 import "ethfs/IFileStore.sol";
 import "base64/base64.sol";
 import "openzeppelin/utils/Strings.sol";
+import "openzeppelin/access/Ownable.sol";
 
-contract PeepoRenderer {
-    address public ethFileStore;
+contract PeepoRenderer is Ownable {
+    address internal ethFileStore;
+    string public baseSVGFileName;
 
-    constructor(address _ethFileStore) {
+    constructor(address _ethFileStore, string memory _baseSVGFileName) {
         ethFileStore = _ethFileStore;
+        baseSVGFileName = _baseSVGFileName;
     }
 
     function renderPeepo(string memory speed, string memory fillColor) public view returns (string memory) {
         // get first part of svg, missing script and closing tags
-        string memory svg = IFileStore(ethFileStore).getFile("pp-part2.svg").read();
+        string memory svg = IFileStore(ethFileStore).getFile(baseSVGFileName).read();
         // Pass in speed and color as arguments to the script
         bytes memory js = abi.encodePacked(
             "e(\"\",\".f\",\"repeat\",",
@@ -42,7 +45,7 @@ contract PeepoRenderer {
                         '"name": "peepo #',
                         Strings.toString(id),
                         '",',
-                        '"image": "data:image/svg;base64,',
+                        '"image": "data:image/svg+xml;base64,',
                         renderPeepo("3", "#ff0000"),
                         '"}'
                     )
@@ -51,5 +54,10 @@ contract PeepoRenderer {
         );
 
         return string(abi.encodePacked("data:application/json;base64,", json));
+    }
+
+    // Admin functions
+    function updateBaseSVGFileName(string memory _baseSVGFileName) external onlyOwner {
+        baseSVGFileName = _baseSVGFileName;
     }
 }

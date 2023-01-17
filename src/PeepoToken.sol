@@ -1,26 +1,27 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.15;
+pragma solidity ^0.8.15;
 
-contract SampleContract {
-    uint256 num2;
+import "ERC721A/ERC721A.sol";
+import "openzeppelin/access/Ownable.sol";
 
-    function func1(uint256 num) external {
-        num2 = num;
+contract PeepoToken is ERC721A, Ownable {
+    address public rendererContract;
 
-        for (uint256 i = 0; i < num; i++) {
-            num2--;
-        }
-
-        assert(num2 == 0);
+    constructor(address _rendererContract) ERC721A("peepo in chain", "PEEPO") {
+        rendererContract = _rendererContract;
     }
 
-    function func2(uint256 num) external {
-        num2 = num;
+    function withdraw() external onlyOwner {
+        payable(this.owner()).transfer(address(this).balance);
+    }
 
-        for (uint256 i = 0; i < num; i++) {
-            num2--;
-        }
+    // owner functions
+    function updateRendererContract(address _rendererContract) external onlyOwner {
+        rendererContract = _rendererContract;
+    }
 
-        assert(num2 == 0);
+    // View functions
+    function tokenURI(uint256 tokenID) public view override (ERC721A) returns (string memory) {
+        return IERC721A(rendererContract).tokenURI(tokenID);
     }
 }

@@ -3,6 +3,7 @@ pragma solidity ^0.8.15;
 
 import "forge-std/Script.sol";
 import "../PeepoRenderer.sol";
+import "../PeepoToken.sol";
 
 contract DeployPeepoRenderer is Script {
     address public constant FileStoreMainnet = 0x9746fD0A77829E12F8A9DBe70D7a322412325B91;
@@ -17,7 +18,8 @@ contract DeployPeepoRenderer is Script {
         }
 
         vm.startBroadcast(0x9aaC8cCDf50dD34d06DF661602076a07750941F6);
-        new PeepoRenderer(fileStore);
+        PeepoRenderer pr = new PeepoRenderer(fileStore, "pp-part2.svg");
+        new PeepoToken(address(pr));
         vm.stopBroadcast();
     }
 }
