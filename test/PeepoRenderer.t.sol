@@ -13,7 +13,7 @@ contract PeepoRendererTest is DSTest {
     address public constant FileStoreGoerli = 0x5E348d0975A920E9611F8140f84458998A53af94;
 
     function setUp() public {
-        peepoRenderer = new PeepoRenderer(address(0), FileStoreGoerli);
+        peepoRenderer = new PeepoRenderer(FileStoreGoerli);
     }
 
     function testRenderPeepo() public view {

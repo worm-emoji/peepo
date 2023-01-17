@@ -5,11 +5,9 @@ import "ethfs/IFileStore.sol";
 import "base64/base64.sol";
 
 contract PeepoRenderer {
-    address public peepoToken;
     address public ethFileStore;
 
-    constructor(address _peepoToken, address _ethFileStore) {
-        peepoToken = _peepoToken;
+    constructor(address _ethFileStore) {
         ethFileStore = _ethFileStore;
     }
 
@@ -27,5 +25,10 @@ contract PeepoRenderer {
         svg = string(abi.encodePacked(svg, Base64.encode(js)));
 
         return string(svg);
+    }
+
+    // Debug helper
+    function renderPeepoString(string memory speed, string memory fillColor) public view returns (string memory) {
+        return string(Base64.decode(renderPeepo(speed, fillColor)));
     }
 }
