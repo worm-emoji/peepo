@@ -3,6 +3,7 @@ pragma solidity ^0.8.15;
 
 import "ethfs/IFileStore.sol";
 import "base64/base64.sol";
+import "openzeppelin/utils/Strings.sol";
 
 contract PeepoRenderer {
     address public ethFileStore;
@@ -30,5 +31,25 @@ contract PeepoRenderer {
     // Debug helper
     function renderPeepoString(string memory speed, string memory fillColor) public view returns (string memory) {
         return string(Base64.decode(renderPeepo(speed, fillColor)));
+    }
+
+    function tokenURI(uint256 id) public view returns (string memory) {
+        string memory json = Base64.encode(
+            bytes(
+                string(
+                    abi.encodePacked(
+                        "{",
+                        '"name": "peepo #',
+                        Strings.toString(id),
+                        '",',
+                        '"image": "data:image/svg;base64,',
+                        renderPeepo("3", "#ff0000"),
+                        '"}'
+                    )
+                )
+            )
+        );
+
+        return string(abi.encodePacked("data:application/json;base64,", json));
     }
 }
