@@ -51,7 +51,7 @@ contract PeepoToken is ERC721A, Ownable {
         // when tokens are minted, generate a seed for each token
         for (uint256 i = 0; i < quantity; i++) {
             uint256 tokenId = startTokenId + i;
-            tokenToSeed[tokenId] = keccak256(abi.encodePacked(block.difficulty, tokenId, uint160(msg.sender)));
+            tokenToSeed[tokenId] = keccak256(abi.encodePacked(block.difficulty, tokenId, msg.sender));
         }
     }
 
