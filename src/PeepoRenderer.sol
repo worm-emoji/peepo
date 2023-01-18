@@ -62,8 +62,8 @@ contract PeepoRenderer is Ownable {
         Peepo memory peepo = Peepo("", "", "", "");
         uint256 mod20 = seed % 20;
         if (mod20 > 9) {
-            peepo.colorName = _colors[0].name;
-            peepo.colorParam = _colors[0].hexCode;
+            peepo.colorName = _colors[10].name;
+            peepo.colorParam = _colors[10].hexCode;
         } else {
             peepo.colorName = _colors[mod20].name;
             peepo.colorParam = _colors[mod20].hexCode;

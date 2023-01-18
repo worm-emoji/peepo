@@ -102,43 +102,71 @@
                 clip-rule="evenodd" />
         </g>
     </defs>
-    <g class="c">
-    <use class="f" href="#1"></use>
-    <use class="f t1" href="#2"></use>
-    <use class="f t2" href="#3"></use>
-    <use class="f t3" href="#3"></use>
-    <use class="f t4" href="#4"></use>
-    </g>
+    <use class="frame f1" href="#1"></use>
+    <use class="frame f2" href="#2"></use>
+    <use class="frame f3" href="#3"></use>
+    <use class="frame f4" href="#3"></use>
+    <use class="frame f5" href="#4"></use>
 
-    <style>
-    .t1 {
-       transform: translateX(1100px)
-    }
-      .t2 {
-       transform: translateX(2200px);
-    }
-      .t3 {
-       transform: translateX(3300px);
-    }
-    .t4 {
-       transform: translateX(4400px);
-    }
+     <style>
+        @keyframes step1 {
+            0% { opacity: 1; }
+            20% { opacity: 0; }
+            40% { opacity: 0; }
+            60% { opacity: 0; }
+            80% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes step2 {
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            40% { opacity: 0; }
+            60% { opacity: 0; }
+            80% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+        @keyframes step3 {
+            0% { opacity: 0; }
+            20% { opacity: 0; }
+            40% { opacity: 1; }
+            60% { opacity: 0; }
+            80% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+        @keyframes step4 {
+            0% { opacity: 0; }
+            20% { opacity: 0; }
+            40% { opacity: 0; }
+            60% { opacity: 1; }
+            80% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+        @keyframes step5 {
+            0% { opacity: 0; }
+            20% { opacity: 0; }
+            40% { opacity: 0; }
+            60% { opacity: 0; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
 
-    @keyframes frame-animation {
-  100% {
-    transform: translateX(-5500px);
-  }
-}
-
-.c {
-          animation: frame-animation var(--timing) infinite;
-          animation-timing-function: steps(5);
-        width: 5500px;
-}
-
-
+        .f1 {
+            animation: step1 var(--timing) steps(1, end) infinite;
+        }
+        .f2 {
+            animation: step2 var(--timing) steps(1, end) infinite;
+        }
+        .f3 {
+            animation: step3 var(--timing) steps(1, end) infinite;
+        }
+        .f4 {
+            animation: step4 var(--timing) steps(1, end) infinite;
+        }
+        .f5 {
+            animation: step5 var(--timing) steps(1, end) infinite;
+        }
     .bodyfill {fill: var(--fill);}
 
-    :root{ --fill: #fff; --timing: 100ms;}
+    :root{ --fill: #fff; --timing: 500ms;}
     </style>
 </svg>
