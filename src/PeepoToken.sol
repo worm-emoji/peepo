@@ -4,8 +4,9 @@ pragma solidity ^0.8.15;
 import "ERC721A/ERC721A.sol";
 import {MerkleProof} from "openzeppelin/utils/cryptography/MerkleProof.sol";
 import "openzeppelin/access/Ownable.sol";
+import "./IERC4906.sol";
 
-contract PeepoToken is ERC721A, Ownable {
+contract PeepoToken is ERC721A, IERC4906, Ownable {
     address public rendererContract;
     bool public mintOpen;
     bytes32 public merkleRoot;
@@ -57,6 +58,7 @@ contract PeepoToken is ERC721A, Ownable {
 
     // owner functions
     function updateRendererContract(address _rendererContract) external onlyOwner {
+        emit BatchMetadataUpdate(0, type(uint256).max);
         rendererContract = _rendererContract;
     }
 
@@ -80,5 +82,12 @@ contract PeepoToken is ERC721A, Ownable {
     function tokenSeed(uint256 tokenID) public view returns (bytes32) {
         if (ownerOf(tokenID) == address(0)) revert URIQueryForNonexistentToken();
         return _tokenSeeds[tokenID];
+    }
+
+    function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
+        return interfaceId == 0x01ffc9a7 // ERC165 interface ID for ERC165.
+            || interfaceId == 0x80ac58cd // ERC165 interface ID for ERC721.
+            || interfaceId == 0x49064906 // ERC165 interface ID for ERC4906
+            || interfaceId == 0x5b5e139f; // ERC165 interface ID for ERC721Metadata.
     }
 }

@@ -17,6 +17,7 @@ contract PeepoRendererTest is DSTest {
     function setUp() public {
         renderer = new PeepoRenderer(FileStoreGoerli, "pp-part2.svg");
         token = new PeepoToken(address(renderer), bytes32(0));
+        renderer.updatePeepoToken(address(token));
         token.setMintOpen(true);
     }
 
@@ -27,6 +28,12 @@ contract PeepoRendererTest is DSTest {
 
     function testMintSeed() public {
         token.mint(5);
+
         console.log("peepoToken.tokenToSeed(1):", uint256(token.tokenSeed(5)));
+    }
+
+    function testPeepoTokenMetadata() public {
+        token.mint(5);
+        console.log("peepoToken.tokenURIJSON(1):", renderer.tokenURIJSON(1));
     }
 }

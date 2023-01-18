@@ -5,7 +5,7 @@ import "forge-std/Script.sol";
 import "../PeepoRenderer.sol";
 import "../PeepoToken.sol";
 
-contract DeployPeepoRenderer is Script {
+contract DeployPeepo is Script {
     address public constant FileStoreMainnet = 0x9746fD0A77829E12F8A9DBe70D7a322412325B91;
     address public constant FileStoreGoerli = 0x5E348d0975A920E9611F8140f84458998A53af94;
 
@@ -19,7 +19,12 @@ contract DeployPeepoRenderer is Script {
 
         vm.startBroadcast(0x9aaC8cCDf50dD34d06DF661602076a07750941F6);
         PeepoRenderer pr = new PeepoRenderer(fileStore, "pp-part2.svg");
-        new PeepoToken(address(pr), bytes32(0));
+        // PeepoToken pt = new PeepoToken(address(pr), bytes32(0));
+        //   pt.setMintOpen(true);
+        // pt.mint(300);
+        PeepoToken pt = PeepoToken(0xF4a563c05B70E56f444eCbbE087a617B34c4c4dE);
+        pr.updatePeepoToken(address(pt));
+        pt.updateRendererContract(address(pr));
         vm.stopBroadcast();
     }
 }

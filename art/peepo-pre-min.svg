@@ -111,7 +111,7 @@
 
     <script>
         //<![CDATA[
-function e(l,n,r,e,o){var a=0;var i=parseInt(document.querySelectorAll(l+" "+n).length);function t(){a=0;_2=0;clearInterval(window._1)}function u(){t();_1=setInterval(c,e)}function c(){var e=a++;for(var t=0;t<i;t+=1){if(a>i){return false}document.querySelectorAll(l+" "+n)[t].style.display="none";document.querySelectorAll(l+" "+n)[e].style.display="block"}if(r==="no-repeat"){if(a===i){for(var t=0;t<i;t+=1){if(a>i){clearInterval(window._1);a=0;var e=i;return false}document.querySelectorAll(l+" "+n)[t].style.display="none";document.querySelectorAll(l+" "+n)[e].style.display="block"}}}else{if(a===i){setTimeout(function(){u()},o)}else if(e>=i){setTimeout(function(){u()},o)}}}window._1=setInterval(c,e);return false}e("",".f","repeat",150*Math.random(),0);
+function e(l,n,r,e,o){var a=0;var i=parseInt(document.querySelectorAll(l+" "+n).length);function t(){a=0;_2=0;clearInterval(window._1)}function u(){t();_1=setInterval(c,e)}function c(){var e=a++;for(var t=0;t<i;t+=1){if(a>i){return false}document.querySelectorAll(l+" "+n)[t].style.display="none";document.querySelectorAll(l+" "+n)[e].style.display="block"}if(r==="no-repeat"){if(a===i){for(var t=0;t<i;t+=1){if(a>i){clearInterval(window._1);a=0;var e=i;return false}document.querySelectorAll(l+" "+n)[t].style.display="none";document.querySelectorAll(l+" "+n)[e].style.display="block"}}}else{if(a===i){setTimeout(function(){u()},o)}else if(e>=i){setTimeout(function(){u()},o)}}}window._1=setInterval(c,e);return false}e("",".f","repeat",170,0);
     //]]>
     </script>
 </svg>
