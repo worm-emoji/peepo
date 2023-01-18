@@ -51,11 +51,11 @@ contract PeepoRenderer is Ownable {
         _colors.push(Color("Orangered", "#FF6767"));
         _colors.push(Color("Green", "#598C3E"));
 
-        _speeds.push(Speed("Busted", "170"));
-        _speeds.push(Speed("Giga", "50"));
-        _speeds.push(Speed("Ultra", "25"));
-        _speeds.push(Speed("Hyper", "10"));
-        _speeds.push(Speed("Normal", "75"));
+        _speeds.push(Speed("Busted", "1s"));
+        _speeds.push(Speed("Giga", "300ms"));
+        _speeds.push(Speed("Ultra", "200ms"));
+        _speeds.push(Speed("Hyper", "100ms"));
+        _speeds.push(Speed("Normal", "500ms"));
     }
 
     function derivePeepo(uint256 seed) public view returns (Peepo memory) {
@@ -81,21 +81,12 @@ contract PeepoRenderer is Ownable {
         return peepo;
     }
 
-    function renderPeepo(string memory speed, string memory fillColor) public view returns (string memory) {
+    function renderPeepo(string memory timing, string memory fill) public view returns (string memory) {
         // get first part of svg, missing script and closing tags
         bytes memory svg = Base64.decode(IFileStore(_ethFileStore).getFile(baseSVGFileName).read());
 
         return string(
-            Base64.encode(
-                abi.encodePacked(
-                    svg,
-                    "e(\"\",\".f\",\"repeat\",",
-                    speed,
-                    ",0);document.querySelectorAll(\".bodyfill\").forEach((x) => { x.setAttribute(\"fill\",\"",
-                    fillColor,
-                    "\"); });\n//]]>\n</script>\n</svg>"
-                )
-            )
+            Base64.encode(abi.encodePacked(svg, ":root{ --timing: ", timing, "; --fill:", fill, ";}</style></svg>"))
         );
     }
 

@@ -18,13 +18,12 @@ contract DeployPeepo is Script {
         }
 
         vm.startBroadcast(0x9aaC8cCDf50dD34d06DF661602076a07750941F6);
-        PeepoRenderer pr = new PeepoRenderer(fileStore, "pp-part2.svg");
-        // PeepoToken pt = new PeepoToken(address(pr), bytes32(0));
-        //   pt.setMintOpen(true);
-        // pt.mint(300);
-        PeepoToken pt = PeepoToken(0xF4a563c05B70E56f444eCbbE087a617B34c4c4dE);
+        PeepoRenderer pr = new PeepoRenderer(fileStore, "peepo-4.chunk");
+        PeepoToken pt = new PeepoToken(address(pr), bytes32(0));
         pr.updatePeepoToken(address(pt));
         pt.updateRendererContract(address(pr));
+        pt.setMintOpen(true);
+        pt.mint(300);
         vm.stopBroadcast();
     }
 }

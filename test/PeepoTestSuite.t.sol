@@ -15,7 +15,7 @@ contract PeepoRendererTest is DSTest {
     address public constant FileStoreGoerli = 0x5E348d0975A920E9611F8140f84458998A53af94;
 
     function setUp() public {
-        renderer = new PeepoRenderer(FileStoreGoerli, "pp-part2.svg");
+        renderer = new PeepoRenderer(FileStoreGoerli, "peepo-4.chunk");
         token = new PeepoToken(address(renderer), bytes32(0));
         renderer.updatePeepoToken(address(token));
         token.setMintOpen(true);
