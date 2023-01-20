@@ -58,9 +58,17 @@ contract PeepoRenderer is Ownable {
         _speeds.push(Speed("Normal", "500ms"));
     }
 
-    function derivePeepo(uint256 seed) public view returns (Peepo memory) {
+    function derivePeepo(bytes32 seed) public view returns (Peepo memory) {
         Peepo memory peepo = Peepo("", "", "", "");
-        uint256 mod20 = seed % 20;
+
+        // split seed into two 16 byte halves
+        bytes16 half1 = bytes16(seed);
+        bytes16 half2 = bytes16(uint128(uint256(seed)));
+
+        uint128 seed1 = uint128(half1);
+        uint128 seed2 = uint128(half2);
+
+        uint256 mod20 = seed1 % 20;
         if (mod20 > 9) {
             peepo.colorName = _colors[10].name;
             peepo.colorParam = _colors[10].hexCode;
@@ -69,7 +77,7 @@ contract PeepoRenderer is Ownable {
             peepo.colorParam = _colors[mod20].hexCode;
         }
 
-        uint256 mod14 = seed % 14;
+        uint256 mod14 = seed2 % 14;
         if (mod14 > 3) {
             peepo.speedName = _speeds[4].name;
             peepo.speedParam = _speeds[4].param;
@@ -124,7 +132,7 @@ contract PeepoRenderer is Ownable {
 
     function tokenURIJSON(uint256 id) public view returns (string memory) {
         bytes32 seed = IPeepoToken(peepoToken).tokenSeed(id);
-        Peepo memory peepo = derivePeepo(uint256(seed));
+        Peepo memory peepo = derivePeepo(seed);
 
         return string(
             abi.encodePacked(
