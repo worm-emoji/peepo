@@ -53,9 +53,9 @@ contract PeepoRenderer is Ownable {
 
         _speeds.push(Speed("TIRED", "2s"));
         _speeds.push(Speed("BUSTED", "1s"));
-        _speeds.push(Speed("ULTRA", "300ms"));
+        _speeds.push(Speed("ULTRA", "150ms"));
         _speeds.push(Speed("HYPER", "100ms"));
-        _speeds.push(Speed("PUMP", "500ms"));
+        _speeds.push(Speed("PUMP", "200ms"));
     }
 
     function derivePeepo(bytes32 seed) public view returns (Peepo memory) {
