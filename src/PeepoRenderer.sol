@@ -115,8 +115,8 @@ contract PeepoRenderer is Ownable {
 
     function _renderAttributes(Peepo memory peepo) internal pure returns (string memory) {
         string[] memory keys = new string[](2);
-        keys[0] = "Hump speed";
-        keys[1] = "Color";
+        keys[0] = "HUMP SPEED";
+        keys[1] = "COLOR";
 
         string[] memory values = new string[](2);
         values[0] = peepo.speedName;
