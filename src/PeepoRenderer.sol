@@ -15,7 +15,7 @@ struct Peepo {
 
 struct Color {
     string name;
-    string hexCode;
+    string param;
 }
 
 struct Speed {
@@ -51,7 +51,7 @@ contract PeepoRenderer is Ownable {
         _colors.push(Color("GUAVA", "#FF6767"));
         _colors.push(Color("GREEN", "#598C3E"));
 
-        _speeds.push(Speed("TIRED", "3s"));
+        _speeds.push(Speed("TIRED", "2s"));
         _speeds.push(Speed("BUSTED", "1s"));
         _speeds.push(Speed("ULTRA", "300ms"));
         _speeds.push(Speed("HYPER", "100ms"));
@@ -72,18 +72,18 @@ contract PeepoRenderer is Ownable {
 
         if (mod20 > 9) {
             peepo.colorName = _colors[10].name;
-            peepo.colorParam = _colors[10].hexCode;
+            peepo.colorParam = _colors[10].param;
         } else if (mod20 == 0) {
             if (mod20 % 2 == 0) {
                 peepo.colorName = _colors[0].name;
-                peepo.colorParam = _colors[0].hexCode;
+                peepo.colorParam = _colors[0].param;
             } else {
                 peepo.colorName = _colors[1].name;
-                peepo.colorParam = _colors[1].hexCode;
+                peepo.colorParam = _colors[1].param;
             }
         } else {
             peepo.colorName = _colors[mod20].name;
-            peepo.colorParam = _colors[mod20].hexCode;
+            peepo.colorParam = _colors[mod20].param;
         }
 
         uint256 mod14 = seed2 % 14;
