@@ -39,23 +39,23 @@ contract PeepoRenderer is Ownable {
         _ethFileStore = _ethFS;
         baseSVGFileName = _baseSVGFileName;
 
-        _colors.push(Color("Lime", "#C6FFA8"));
-        _colors.push(Color("Purple", "#BFA9CA"));
-        _colors.push(Color("Slate", "#A9B8CA"));
-        _colors.push(Color("Burnt Orange", "#CAA9A9"));
-        _colors.push(Color("Lemon Lime", "#E9FF60"));
-        _colors.push(Color("Radioactive Green", "#60FFB3"));
-        _colors.push(Color("Baby Blue", "#60D9FF"));
-        _colors.push(Color("Blurple", "#6079FF"));
-        _colors.push(Color("Hot Pink", "#FF60A3"));
-        _colors.push(Color("Orangered", "#FF6767"));
-        _colors.push(Color("Green", "#598C3E"));
+        _colors.push(Color("NEON G", "#58FF00"));
+        _colors.push(Color("PURP", "#BFA9CA"));
+        _colors.push(Color("POWDER", "#A9B8CA"));
+        _colors.push(Color("CHICKEN BREAST", "#CAA9A9"));
+        _colors.push(Color("LEMON", "#E9FF60"));
+        _colors.push(Color("SICKLY", "#60FFB3"));
+        _colors.push(Color("G-FUEL", "#60D9FF"));
+        _colors.push(Color("ROYAL LITE", "#6079FF"));
+        _colors.push(Color("JUICY", "#FF60A3"));
+        _colors.push(Color("GUAVA", "#FF6767"));
+        _colors.push(Color("GREEN", "#598C3E"));
 
-        _speeds.push(Speed("Busted", "1s"));
-        _speeds.push(Speed("Giga", "300ms"));
-        _speeds.push(Speed("Ultra", "200ms"));
-        _speeds.push(Speed("Hyper", "100ms"));
-        _speeds.push(Speed("Normal", "500ms"));
+        _speeds.push(Speed("TIRED", "3s"));
+        _speeds.push(Speed("BUSTED", "1s"));
+        _speeds.push(Speed("ULTRA", "300ms"));
+        _speeds.push(Speed("HYPER", "100ms"));
+        _speeds.push(Speed("PUMP", "500ms"));
     }
 
     function derivePeepo(bytes32 seed) public view returns (Peepo memory) {
@@ -69,21 +69,31 @@ contract PeepoRenderer is Ownable {
         uint128 seed2 = uint128(half2);
 
         uint256 mod20 = seed1 % 20;
+
         if (mod20 > 9) {
             peepo.colorName = _colors[10].name;
             peepo.colorParam = _colors[10].hexCode;
+        } else if (mod20 == 0) {
+            if (mod20 % 2 == 0) {
+                peepo.colorName = _colors[0].name;
+                peepo.colorParam = _colors[0].hexCode;
+            } else {
+                peepo.colorName = _colors[1].name;
+                peepo.colorParam = _colors[1].hexCode;
+            }
         } else {
             peepo.colorName = _colors[mod20].name;
             peepo.colorParam = _colors[mod20].hexCode;
         }
 
         uint256 mod14 = seed2 % 14;
-        if (mod14 > 3) {
-            peepo.speedName = _speeds[4].name;
-            peepo.speedParam = _speeds[4].param;
-        } else {
+
+        if (mod14 < 3 && (mod14 != 0 || (mod14 == 0 && mod14 % 4 == 0))) {
             peepo.speedName = _speeds[mod14].name;
             peepo.speedParam = _speeds[mod14].param;
+        } else {
+            peepo.speedName = _speeds[4].name;
+            peepo.speedParam = _speeds[4].param;
         }
 
         return peepo;
