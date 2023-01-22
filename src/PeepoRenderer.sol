@@ -25,6 +25,8 @@ struct Speed {
 
 interface IPeepoToken {
     function tokenSeed(uint256 tokenID) external view returns (bytes32);
+    function triggerMetadataUpdate(uint256 _tokenId) external;
+    function triggerBatchMetadataUpdate() external;
 }
 
 contract PeepoRenderer is Ownable {
@@ -165,6 +167,7 @@ contract PeepoRenderer is Ownable {
 
     // Admin functions
     function updateBaseSVG(bytes memory _baseSVG) external onlyOwner {
+        IPeepoToken(peepoToken).triggerBatchMetadataUpdate();
         _baseSVGPointer = SSTORE2.write(_baseSVG);
     }
 

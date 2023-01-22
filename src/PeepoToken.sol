@@ -14,6 +14,7 @@ contract PeepoToken is ERC721A, IERC4906, Ownable {
 
     error MintClosed();
     error NotAllowlisted();
+    error OnlyOwnerOrMetadataContract();
 
     constructor(address _rendererContract, bytes32 _merkleRoot) ERC721A("peepo in chain", "PEEPO") {
         rendererContract = _rendererContract;
@@ -58,7 +59,7 @@ contract PeepoToken is ERC721A, IERC4906, Ownable {
 
     // owner functions
     function updateRendererContract(address _rendererContract) external onlyOwner {
-        emit BatchMetadataUpdate(0, type(uint256).max);
+        emit BatchMetadataUpdate(_startTokenId(), _nextTokenId());
         rendererContract = _rendererContract;
     }
 
@@ -72,6 +73,17 @@ contract PeepoToken is ERC721A, IERC4906, Ownable {
 
     function withdraw() external onlyOwner {
         payable(this.owner()).transfer(address(this).balance);
+    }
+
+    // renderer contract functions
+    function triggerBatchMetadataUpdate() external {
+        if (msg.sender != rendererContract || msg.sender != owner()) revert OnlyOwnerOrMetadataContract();
+        emit BatchMetadataUpdate(_startTokenId(), _nextTokenId());
+    }
+
+    function triggerMetadataUpdate(uint256 _tokenId) external {
+        if (msg.sender != rendererContract || msg.sender != owner()) revert OnlyOwnerOrMetadataContract();
+        emit MetadataUpdate(_tokenId);
     }
 
     // View functions
