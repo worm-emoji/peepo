@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.15;
 
-import "ethfs/IFileStore.sol";
 import "base64/base64.sol";
 import "openzeppelin/utils/Strings.sol";
 import "openzeppelin/access/Ownable.sol";
+import "solady/utils/SSTORE2.sol";
 
 struct Peepo {
     string speedParam;
@@ -28,16 +28,15 @@ interface IPeepoToken {
 }
 
 contract PeepoRenderer is Ownable {
-    address internal _ethFileStore;
+    address internal _baseSVGPointer;
     address public peepoToken;
     string public baseSVGFileName;
 
     Color[] internal _colors;
     Speed[] internal _speeds;
 
-    constructor(address _ethFS, string memory _baseSVGFileName) {
-        _ethFileStore = _ethFS;
-        baseSVGFileName = _baseSVGFileName;
+    constructor(bytes memory _baseSVG) {
+        _baseSVGPointer = SSTORE2.write(_baseSVG);
 
         _colors.push(Color("NEON G", "#58FF00"));
         _colors.push(Color("PURP", "#BFA9CA"));
@@ -101,7 +100,7 @@ contract PeepoRenderer is Ownable {
 
     function renderPeepo(string memory timing, string memory fill) public view returns (string memory) {
         // get first part of svg, missing script and closing tags
-        bytes memory svg = Base64.decode(IFileStore(_ethFileStore).getFile(baseSVGFileName).read());
+        bytes memory svg = SSTORE2.read(_baseSVGPointer);
 
         return string(
             Base64.encode(abi.encodePacked(svg, ":root{ --timing: ", timing, "; --fill:", fill, ";}</style></svg>"))
@@ -165,8 +164,8 @@ contract PeepoRenderer is Ownable {
     }
 
     // Admin functions
-    function updateBaseSVGFileName(string memory _baseSVGFileName) external onlyOwner {
-        baseSVGFileName = _baseSVGFileName;
+    function updateBaseSVG(bytes memory _baseSVG) external onlyOwner {
+        _baseSVGPointer = SSTORE2.write(_baseSVG);
     }
 
     function updatePeepoToken(address _peepoToken) external onlyOwner {

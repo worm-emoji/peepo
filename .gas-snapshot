@@ -1,2 +1,3 @@
-PeepoRendererTest:testMintSeed() (gas: 193136)
-PeepoRendererTest:testRenderPeepo() (gas: 649921)
+PeepoRendererTest:testMintSeed() (gas: 193214)
+PeepoRendererTest:testPeepoTokenMetadata() (gas: 2300204)
+PeepoRendererTest:testRenderPeepo() (gas: 3755809)
