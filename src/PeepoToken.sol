@@ -38,13 +38,13 @@ contract PeepoToken is ERC721A, IERC4906, Ownable {
         _mint(msg.sender, quantity);
     }
 
-    function _startTokenId() internal pure override (ERC721A) returns (uint256) {
+    function _startTokenId() internal pure override(ERC721A) returns (uint256) {
         return 1;
     }
 
     function _beforeTokenTransfers(address from, address, uint256 startTokenId, uint256 quantity)
         internal
-        override (ERC721A)
+        override(ERC721A)
     {
         // only do something if minting
         if (from != address(0)) return;
@@ -75,7 +75,7 @@ contract PeepoToken is ERC721A, IERC4906, Ownable {
     }
 
     // View functions
-    function tokenURI(uint256 tokenID) public view override (ERC721A) returns (string memory) {
+    function tokenURI(uint256 tokenID) public view override(ERC721A) returns (string memory) {
         return IERC721A(rendererContract).tokenURI(tokenID);
     }
 
