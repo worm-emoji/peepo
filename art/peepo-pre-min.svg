@@ -1,5 +1,66 @@
 <svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg" version="1.1"
     preserveAspectRatio="xMinYMin" overflow="visible" width="500" height="500">
+         <style>
+        @keyframes step1 {
+            0% { opacity: 1; }
+            20% { opacity: 0; }
+            40% { opacity: 0; }
+            60% { opacity: 0; }
+            80% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes step2 {
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            40% { opacity: 0; }
+            60% { opacity: 0; }
+            80% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+        @keyframes step3 {
+            0% { opacity: 0; }
+            20% { opacity: 0; }
+            40% { opacity: 1; }
+            60% { opacity: 0; }
+            80% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+        @keyframes step4 {
+            0% { opacity: 0; }
+            20% { opacity: 0; }
+            40% { opacity: 0; }
+            60% { opacity: 1; }
+            80% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+        @keyframes step5 {
+            0% { opacity: 0; }
+            20% { opacity: 0; }
+            40% { opacity: 0; }
+            60% { opacity: 0; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .f1 {
+            animation: step1 var(--timing) steps(1, end) infinite;
+        }
+        .f2 {
+            animation: step2 var(--timing) steps(1, end) infinite;
+        }
+        .f3 {
+            animation: step3 var(--timing) steps(1, end) infinite;
+        }
+        .f4 {
+            animation: step4 var(--timing) steps(1, end) infinite;
+        }
+        .f5 {
+            animation: step5 var(--timing) steps(1, end) infinite;
+        }
+    .bodyfill {fill: var(--fill);}
+
+    :root{ --fill: #fff; --timing: 1500ms;}
+    </style>
     <defs>
         <g id="1">
             <path fill="#fff" d="M0 0h1000v1000H0z"/>
@@ -60,66 +121,4 @@
     <use class="frame f3" href="#3"></use>
     <use class="frame f4" href="#3"></use>
     <use class="frame f5" href="#4"></use>
-
-     <style>
-        @keyframes step1 {
-            0% { opacity: 1; }
-            20% { opacity: 0; }
-            40% { opacity: 0; }
-            60% { opacity: 0; }
-            80% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-        @keyframes step2 {
-            0% { opacity: 0; }
-            20% { opacity: 1; }
-            40% { opacity: 0; }
-            60% { opacity: 0; }
-            80% { opacity: 0; }
-            100% { opacity: 0; }
-        }
-        @keyframes step3 {
-            0% { opacity: 0; }
-            20% { opacity: 0; }
-            40% { opacity: 1; }
-            60% { opacity: 0; }
-            80% { opacity: 0; }
-            100% { opacity: 0; }
-        }
-        @keyframes step4 {
-            0% { opacity: 0; }
-            20% { opacity: 0; }
-            40% { opacity: 0; }
-            60% { opacity: 1; }
-            80% { opacity: 0; }
-            100% { opacity: 0; }
-        }
-        @keyframes step5 {
-            0% { opacity: 0; }
-            20% { opacity: 0; }
-            40% { opacity: 0; }
-            60% { opacity: 0; }
-            80% { opacity: 1; }
-            100% { opacity: 0; }
-        }
-
-        .f1 {
-            animation: step1 var(--timing) steps(1, end) infinite;
-        }
-        .f2 {
-            animation: step2 var(--timing) steps(1, end) infinite;
-        }
-        .f3 {
-            animation: step3 var(--timing) steps(1, end) infinite;
-        }
-        .f4 {
-            animation: step4 var(--timing) steps(1, end) infinite;
-        }
-        .f5 {
-            animation: step5 var(--timing) steps(1, end) infinite;
-        }
-    .bodyfill {fill: var(--fill);}
-
-    :root{ --fill: #fff; --timing: 500ms;}
-    </style>
 </svg>

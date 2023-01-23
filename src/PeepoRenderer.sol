@@ -54,8 +54,8 @@ contract PeepoRenderer is Ownable {
 
         _speeds.push(Speed("TIRED", "2s"));
         _speeds.push(Speed("BUSTED", "1s"));
-        _speeds.push(Speed("ULTRA", "150ms"));
         _speeds.push(Speed("HYPER", "100ms"));
+        _speeds.push(Speed("ULTRA", "150ms"));
         _speeds.push(Speed("PUMP", "200ms"));
     }
 
@@ -87,12 +87,25 @@ contract PeepoRenderer is Ownable {
             peepo.colorParam = _colors[mod20].param;
         }
 
-        uint256 mod14 = seed2 % 14;
-
-        if (mod14 < 3 && (mod14 != 0 || (mod14 == 0 && mod14 % 4 == 0))) {
-            peepo.speedName = _speeds[mod14].name;
-            peepo.speedParam = _speeds[mod14].param;
+        mod20 = seed2 % 50;
+        if (mod20 == 0) {
+            // 1/50 == 2% == TIRED
+            peepo.speedName = _speeds[0].name;
+            peepo.speedParam = _speeds[0].param;
+        } else if (mod20 > 0 && mod20 < 3) {
+            // 2/50 == 4% == BUSTED
+            peepo.speedName = _speeds[1].name;
+            peepo.speedParam = _speeds[1].param;
+        } else if (mod20 >= 3 && mod20 < 5) {
+            // 2/50 == 4% == HYPER
+            peepo.speedName = _speeds[2].name;
+            peepo.speedParam = _speeds[2].param;
+        } else if (mod20 >= 6 && mod20 < 13) {
+            // 7/50 == 14% == ULTRA
+            peepo.speedName = _speeds[3].name;
+            peepo.speedParam = _speeds[3].param;
         } else {
+            // 37/50 == 74% == PUMP
             peepo.speedName = _speeds[4].name;
             peepo.speedParam = _speeds[4].param;
         }
