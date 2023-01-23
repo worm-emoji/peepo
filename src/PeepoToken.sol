@@ -2,7 +2,7 @@
 pragma solidity ^0.8.15;
 
 import "ERC721A/ERC721A.sol";
-import {MerkleProof} from "openzeppelin/utils/cryptography/MerkleProof.sol";
+import {MerkleProofLib} from "solady/utils/MerkleProofLib.sol";
 import "openzeppelin/access/Ownable.sol";
 import "./IERC4906.sol";
 
@@ -22,7 +22,7 @@ contract PeepoToken is ERC721A, IERC4906, Ownable {
     }
 
     function _isAllowlisted(address _wallet, bytes32[] calldata _proof) internal view returns (bool) {
-        return MerkleProof.verify(_proof, merkleRoot, keccak256(abi.encodePacked(_wallet)));
+        return MerkleProofLib.verify(_proof, merkleRoot, keccak256(abi.encodePacked(_wallet)));
     }
 
     function mint(uint256 quantity) external payable {
