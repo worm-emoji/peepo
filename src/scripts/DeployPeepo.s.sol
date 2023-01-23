@@ -33,13 +33,15 @@ contract DeployPeepo is Script {
     }
 
     function run() public {
+        address ptr = saveOrUseData("./art/peepo.chunk");
+
         vm.startBroadcast(0x9aaC8cCDf50dD34d06DF661602076a07750941F6);
-        // PeepoRenderer pr = new PeepoRenderer(vm.readFileBinary("./art/peepo.chunk"));
-        // PeepoToken pt = new PeepoToken(address(pr), bytes32(0));
-        // pr.updatePeepoToken(address(pt));
-        // pt.updateRendererContract(address(pr));
-        // pt.setMintOpen(true);
-        // pt.mint(300);
+        PeepoRenderer pr = new PeepoRenderer(ptr);
+        PeepoToken pt = new PeepoToken(address(pr), bytes32(0));
+        pr.updatePeepoToken(address(pt));
+        pt.updateRendererContract(address(pr));
+        pt.setMintOpen(true);
+        pt.mint(300);
         vm.stopBroadcast();
     }
 }
