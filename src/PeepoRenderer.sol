@@ -9,8 +9,8 @@ import "solady/utils/SSTORE2.sol";
 struct Peepo {
     string speedParam;
     string speedName;
-    string colorParam;
-    string colorName;
+    string bodyColorParam;
+    string bodyColorName;
     string bgColorParam;
     string bgColorName;
 }
@@ -76,19 +76,19 @@ contract PeepoRenderer is Ownable {
         uint256 mod20 = seed1 % 20;
 
         if (mod20 > 9) {
-            peepo.colorName = _colors[10].name;
-            peepo.colorParam = _colors[10].param;
+            peepo.bodyColorName = _colors[10].name;
+            peepo.bodyColorParam = _colors[10].param;
         } else if (mod20 == 0) {
             if (mod20 % 2 == 0) {
-                peepo.colorName = _colors[0].name;
-                peepo.colorParam = _colors[0].param;
+                peepo.bodyColorName = _colors[0].name;
+                peepo.bodyColorParam = _colors[0].param;
             } else {
-                peepo.colorName = _colors[1].name;
-                peepo.colorParam = _colors[1].param;
+                peepo.bodyColorName = _colors[1].name;
+                peepo.bodyColorParam = _colors[1].param;
             }
         } else {
-            peepo.colorName = _colors[mod20].name;
-            peepo.colorParam = _colors[mod20].param;
+            peepo.bodyColorName = _colors[mod20].name;
+            peepo.bodyColorParam = _colors[mod20].param;
         }
 
         uint256 mod50 = seed2 % 50;
@@ -156,12 +156,12 @@ contract PeepoRenderer is Ownable {
     function _renderAttributes(Peepo memory peepo) internal pure returns (string memory) {
         string[] memory keys = new string[](3);
         keys[0] = "HUMP SPEED";
-        keys[1] = "COLOR";
+        keys[1] = "BODY";
         keys[2] = "BACKGROUND";
 
         string[] memory values = new string[](3);
         values[0] = peepo.speedName;
-        values[1] = peepo.colorName;
+        values[1] = peepo.bodyColorName;
         values[2] = peepo.bgColorName;
 
         string memory attributes = "[";
@@ -193,7 +193,7 @@ contract PeepoRenderer is Ownable {
                 Strings.toString(id),
                 '",',
                 '"image": "data:image/svg+xml;base64,',
-                renderPeepo(peepo.speedParam, peepo.colorParam, peepo.bgColorParam),
+                renderPeepo(peepo.speedParam, peepo.bodyColorParam, peepo.bgColorParam),
                 '","attributes":',
                 _renderAttributes(peepo),
                 "}"
