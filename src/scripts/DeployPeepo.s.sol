@@ -4,16 +4,42 @@ pragma solidity ^0.8.15;
 import "forge-std/Script.sol";
 import "../PeepoRenderer.sol";
 import "../PeepoToken.sol";
+import "../PeepoAssetStore.sol";
 
 contract DeployPeepo is Script {
+    address public immutable PeepoAssetStoreGoerli = 0xdb80EdF2abCA1942Cedfb8998F804b15C6C803D6;
+    address public immutable PeepoAssetStoreMainnet = address(0);
+
+    function saveOrUseData(string memory path) public returns (address) {
+        address pasAddr = address(0);
+        if (block.chainid == 0) {
+            revert("Please change this line to reference deployed asset store");
+        } else if (block.chainid == 5) {
+            pasAddr = PeepoAssetStoreGoerli;
+        } else {
+            revert("Please deploy and set PeepoAssetStore for this chain");
+        }
+        PeepoAssetStore pas = PeepoAssetStore(pasAddr);
+
+        bytes memory data = vm.readFileBinary(path);
+        address existingPtr = pas.assetMapping(keccak256(data));
+        if (existingPtr != address(0)) {
+            return existingPtr;
+        }
+        vm.startBroadcast(0x9aaC8cCDf50dD34d06DF661602076a07750941F6);
+        address ptr = pas.saveAsset(data);
+        vm.stopBroadcast();
+        return ptr;
+    }
+
     function run() public {
         vm.startBroadcast(0x9aaC8cCDf50dD34d06DF661602076a07750941F6);
-        PeepoRenderer pr = new PeepoRenderer(vm.readFileBinary("./art/peepo.chunk"));
-        PeepoToken pt = new PeepoToken(address(pr), bytes32(0));
-        pr.updatePeepoToken(address(pt));
-        pt.updateRendererContract(address(pr));
-        pt.setMintOpen(true);
-        pt.mint(300);
+        // PeepoRenderer pr = new PeepoRenderer(vm.readFileBinary("./art/peepo.chunk"));
+        // PeepoToken pt = new PeepoToken(address(pr), bytes32(0));
+        // pr.updatePeepoToken(address(pt));
+        // pt.updateRendererContract(address(pr));
+        // pt.setMintOpen(true);
+        // pt.mint(300);
         vm.stopBroadcast();
     }
 }

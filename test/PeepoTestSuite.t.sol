@@ -6,15 +6,19 @@ import {Vm} from "forge-std/Vm.sol";
 import {console} from "forge-std/console.sol";
 import {PeepoRenderer} from "../src/PeepoRenderer.sol";
 import {PeepoToken} from "../src/PeepoToken.sol";
+import {PeepoAssetStore} from "../src/PeepoAssetStore.sol";
 import "base64/base64.sol";
 
 contract PeepoRendererTest is DSTest {
     PeepoRenderer internal renderer;
     PeepoToken internal token;
+    PeepoAssetStore internal pas;
+
     Vm internal immutable vm = Vm(HEVM_ADDRESS);
 
     function setUp() public {
-        renderer = new PeepoRenderer(vm.readFileBinary("./art/peepo-7.chunk"));
+        pas = new PeepoAssetStore();
+        renderer = new PeepoRenderer(pas.saveAsset(vm.readFileBinary("./art/peepo.chunk")));
         token = new PeepoToken(address(renderer), bytes32(0));
         renderer.updatePeepoToken(address(token));
         token.setMintOpen(true);
@@ -33,5 +37,9 @@ contract PeepoRendererTest is DSTest {
     function testPeepoTokenMetadata() public {
         token.mint(5);
         console.log("peepoToken.tokenURIJSON(1):", renderer.tokenURIJSON(1));
+    }
+
+    function testPeepoAssetStore() public {
+        pas.saveAsset(vm.readFileBinary("./art/peepo.chunk"));
     }
 }

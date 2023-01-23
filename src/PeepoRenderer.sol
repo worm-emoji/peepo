@@ -30,15 +30,15 @@ interface IPeepoToken {
 }
 
 contract PeepoRenderer is Ownable {
-    address internal _baseSVGPointer;
+    address public baseSVGPointer;
     address public peepoToken;
     string public baseSVGFileName;
 
     Color[] internal _colors;
     Speed[] internal _speeds;
 
-    constructor(bytes memory _baseSVG) {
-        _baseSVGPointer = SSTORE2.write(_baseSVG);
+    constructor(address _baseSVGPointer) {
+        baseSVGPointer = _baseSVGPointer;
 
         _colors.push(Color("NEON G", "#58FF00"));
         _colors.push(Color("PURP", "#BFA9CA"));
@@ -115,7 +115,7 @@ contract PeepoRenderer is Ownable {
 
     function renderPeepo(string memory timing, string memory fill) public view returns (string memory) {
         // get first part of svg, missing script and closing tags
-        bytes memory svg = SSTORE2.read(_baseSVGPointer);
+        bytes memory svg = SSTORE2.read(baseSVGPointer);
 
         return string(
             Base64.encode(abi.encodePacked(svg, ":root{ --timing: ", timing, "; --fill:", fill, ";}</style></svg>"))
@@ -181,7 +181,7 @@ contract PeepoRenderer is Ownable {
     // Admin functions
     function updateBaseSVG(bytes memory _baseSVG) external onlyOwner {
         IPeepoToken(peepoToken).triggerBatchMetadataUpdate();
-        _baseSVGPointer = SSTORE2.write(_baseSVG);
+        baseSVGPointer = SSTORE2.write(_baseSVG);
     }
 
     function updatePeepoToken(address _peepoToken) external onlyOwner {
