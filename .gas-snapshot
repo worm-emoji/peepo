@@ -1,4 +1,4 @@
-PeepoRendererTest:testMintSeed() (gas: 193083)
-PeepoRendererTest:testPeepoAssetStore() (gas: 4764029)
-PeepoRendererTest:testPeepoTokenMetadata() (gas: 2300239)
-PeepoRendererTest:testRenderPeepo() (gas: 3755809)
+PeepoRendererTest:testMintSeed() (gas: 24168)
+PeepoRendererTest:testPeepoAssetStore() (gas: 4734792)
+PeepoRendererTest:testPeepoTokenMetadata() (gas: 2123127)
+PeepoRendererTest:testRenderPeepo() (gas: 3736819)

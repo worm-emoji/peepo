@@ -2,7 +2,7 @@
 solc = "0.8.15"
 bytecode_hash = "none"
 optimizer_runs = 1000000
-fs_permissions = [{ access = "read", path = "./art"}]
+fs_permissions = [{ access = "read", path = "./"}]
 
 [profile.intense.fuzz]
 runs = 10000

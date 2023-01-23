@@ -22,20 +22,18 @@ contract PeepoRendererTest is DSTest {
         token = new PeepoToken(address(renderer), bytes32(0));
         renderer.updatePeepoToken(address(token));
         token.setMintOpen(true);
+        token.mint(5);
     }
 
     function testRenderPeepo() public view {
         console.log("peepoRenderer.renderPeepo(150, #ff0000):", renderer.renderPeepoString("150", "#ff0000", "#ff0000"));
     }
 
-    function testMintSeed() public {
-        token.mint(5);
-
+    function testMintSeed() public view {
         console.log("peepoToken.tokenToSeed(1):", uint256(token.tokenSeed(5)));
     }
 
-    function testPeepoTokenMetadata() public {
-        token.mint(5);
+    function testPeepoTokenMetadata() public view {
         console.log("peepoToken.tokenURIJSON(1):", renderer.tokenURIJSON(1));
     }
 

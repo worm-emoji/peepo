@@ -91,20 +91,20 @@ contract PeepoRenderer is Ownable {
             peepo.colorParam = _colors[mod20].param;
         }
 
-        mod20 = seed2 % 50;
-        if (mod20 == 0) {
+        uint256 mod50 = seed2 % 50;
+        if (mod50 == 0) {
             // 1/50 == 2% == TIRED
             peepo.speedName = _speeds[0].name;
             peepo.speedParam = _speeds[0].param;
-        } else if (mod20 > 0 && mod20 < 3) {
+        } else if (mod50 > 0 && mod50 < 3) {
             // 2/50 == 4% == BUSTED
             peepo.speedName = _speeds[1].name;
             peepo.speedParam = _speeds[1].param;
-        } else if (mod20 >= 3 && mod20 < 5) {
+        } else if (mod50 >= 3 && mod50 < 5) {
             // 2/50 == 4% == HYPER
             peepo.speedName = _speeds[2].name;
             peepo.speedParam = _speeds[2].param;
-        } else if (mod20 >= 6 && mod20 < 13) {
+        } else if (mod50 >= 6 && mod50 < 13) {
             // 7/50 == 14% == ULTRA
             peepo.speedName = _speeds[3].name;
             peepo.speedParam = _speeds[3].param;
@@ -114,8 +114,8 @@ contract PeepoRenderer is Ownable {
             peepo.speedParam = _speeds[4].param;
         }
 
-        mod20 = seed3 % 50;
-        if (mod20 % 10 < 10) {
+        mod20 = seed3 % 20;
+        if (mod20 < 10) {
             // only half of peepos get a color
             peepo.bgColorName = _colors[mod20].name;
             peepo.bgColorParam = _colors[mod20].param;
