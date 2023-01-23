@@ -120,8 +120,8 @@ contract PeepoRenderer is Ownable {
             peepo.bgColorName = _colors[mod20].name;
             peepo.bgColorParam = _colors[mod20].param;
         } else {
-            peepo.bgColorName = _colors[10].name;
-            peepo.bgColorParam = _colors[10].param;
+            peepo.bgColorName = _colors[11].name;
+            peepo.bgColorParam = _colors[11].param;
         }
 
         return peepo;
