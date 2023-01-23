@@ -28,4 +28,9 @@ contract PeepoAssetStore is Ownable {
     function removeAllowedWriter(address _writer) external onlyOwner {
         allowedWriters[_writer] = false;
     }
+
+    function read(bytes32 contentHash) external view returns (bytes memory) {
+        // SSTORE2 will error if hash doesn't exist / is the zero address
+        return SSTORE2.read(assetMapping[contentHash]);
+    }
 }

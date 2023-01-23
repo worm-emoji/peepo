@@ -205,9 +205,9 @@ contract PeepoRenderer is Ownable {
     }
 
     // Admin functions
-    function updateBaseSVG(bytes memory _baseSVG) external onlyOwner {
+    function updateBaseSVGPointer(address _ptrAddr) external onlyOwner {
         IPeepoToken(peepoToken).triggerBatchMetadataUpdate();
-        baseSVGPointer = SSTORE2.write(_baseSVG);
+        baseSVGPointer = _ptrAddr;
     }
 
     function updatePeepoToken(address _peepoToken) external onlyOwner {
