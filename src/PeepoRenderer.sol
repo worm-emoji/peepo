@@ -132,14 +132,12 @@ contract PeepoRenderer is Ownable {
         view
         returns (string memory)
     {
-        // get first part of svg, missing script and closing tags
+        // get first part of svg, missing style opening tag and closing svg tag
         bytes memory svg = SSTORE2.read(baseSVGPointer);
 
         return string(
             Base64.encode(
-                abi.encodePacked(
-                    svg, "<style>:root{ --timing: ", timing, "; --fill:", fill, "; --bg:", bg, ";}</style></svg>"
-                )
+                abi.encodePacked(svg, ":root{ --timing: ", timing, "; --fill:", fill, "; --bg:", bg, ";}</style></svg>")
             )
         );
     }
