@@ -28,7 +28,7 @@ contract DeployPeepo is Script {
             return existingPtr;
         }
         console.log("Deploying file %s (%s)", path, vm.toString(keccak256(data)));
-        vm.startBroadcast(0x9aaC8cCDf50dD34d06DF661602076a07750941F6);
+        vm.startBroadcast(vm.envAddress("DEPLOYER_ADDRESS"));
         address ptr = pas.saveAsset(data);
         vm.stopBroadcast();
         return ptr;
@@ -37,7 +37,7 @@ contract DeployPeepo is Script {
     function run() public {
         address ptr = saveOrUseData("./art/peepo.chunk");
 
-        vm.startBroadcast(0x9aaC8cCDf50dD34d06DF661602076a07750941F6);
+        vm.startBroadcast(vm.envAddress("DEPLOYER_ADDRESS"));
         PeepoRenderer pr = new PeepoRenderer(ptr);
         PeepoToken pt = new PeepoToken(address(pr), bytes32(0));
         pr.updatePeepoToken(address(pt));

@@ -6,7 +6,7 @@ import "../PeepoAssetStore.sol";
 
 contract DeployPeepoAssetStore is Script {
     function run() public {
-        vm.startBroadcast(0x9aaC8cCDf50dD34d06DF661602076a07750941F6);
+        vm.startBroadcast(vm.envAddress("DEPLOYER_ADDRESS"));
         new PeepoAssetStore();
         vm.stopBroadcast();
     }

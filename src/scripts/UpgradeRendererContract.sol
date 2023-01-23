@@ -13,7 +13,7 @@ contract UpgradeRendererContract is Script {
         DeployPeepo pd = new DeployPeepo();
         address ptr = pd.saveOrUseData("./art/peepo.chunk");
 
-        vm.startBroadcast(0x9aaC8cCDf50dD34d06DF661602076a07750941F6);
+        vm.startBroadcast(vm.envAddress("DEPLOYER_ADDRESS"));
         PeepoRenderer pr = new PeepoRenderer(ptr);
         PeepoToken pt = PeepoToken(peepoTokenDeployment);
         pr.updatePeepoToken(peepoTokenDeployment);
