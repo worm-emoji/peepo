@@ -11,6 +11,8 @@ struct Peepo {
     string speedName;
     string colorParam;
     string colorName;
+    string bgColorParam;
+    string bgColorName;
 }
 
 struct Color {
@@ -51,6 +53,7 @@ contract PeepoRenderer is Ownable {
         _colors.push(Color("JUICY", "#FF60A3"));
         _colors.push(Color("GUAVA", "#FF6767"));
         _colors.push(Color("GREEN", "#598C3E"));
+        _colors.push(Color("WHITE", "#ffffff"));
 
         _speeds.push(Speed("TIRED", "2s"));
         _speeds.push(Speed("BUSTED", "1s"));
@@ -60,7 +63,7 @@ contract PeepoRenderer is Ownable {
     }
 
     function derivePeepo(bytes32 seed) public view returns (Peepo memory) {
-        Peepo memory peepo = Peepo("", "", "", "");
+        Peepo memory peepo = Peepo("", "", "", "", "", "");
 
         // split seed into two 16 byte halves
         bytes16 half1 = bytes16(seed);
@@ -68,6 +71,7 @@ contract PeepoRenderer is Ownable {
 
         uint128 seed1 = uint128(half1);
         uint128 seed2 = uint128(half2);
+        uint256 seed3 = uint256(seed1) + uint256(seed2);
 
         uint256 mod20 = seed1 % 20;
 
@@ -110,31 +114,55 @@ contract PeepoRenderer is Ownable {
             peepo.speedParam = _speeds[4].param;
         }
 
+        mod20 = seed3 % 50;
+        if (mod20 % 10 < 10) {
+            // only half of peepos get a color
+            peepo.bgColorName = _colors[mod20].name;
+            peepo.bgColorParam = _colors[mod20].param;
+        } else {
+            peepo.bgColorName = _colors[10].name;
+            peepo.bgColorParam = _colors[10].param;
+        }
+
         return peepo;
     }
 
-    function renderPeepo(string memory timing, string memory fill) public view returns (string memory) {
+    function renderPeepo(string memory timing, string memory fill, string memory bg)
+        public
+        view
+        returns (string memory)
+    {
         // get first part of svg, missing script and closing tags
         bytes memory svg = SSTORE2.read(baseSVGPointer);
 
         return string(
-            Base64.encode(abi.encodePacked(svg, ":root{ --timing: ", timing, "; --fill:", fill, ";}</style></svg>"))
+            Base64.encode(
+                abi.encodePacked(
+                    svg, "<style>:root{ --timing: ", timing, "; --fill:", fill, "; --bg:", bg, ";}</style></svg>"
+                )
+            )
         );
     }
 
     // Debug helper
-    function renderPeepoString(string memory speed, string memory fillColor) public view returns (string memory) {
-        return string(Base64.decode(renderPeepo(speed, fillColor)));
+    function renderPeepoString(string memory speed, string memory fillColor, string memory bgColor)
+        public
+        view
+        returns (string memory)
+    {
+        return string(Base64.decode(renderPeepo(speed, fillColor, bgColor)));
     }
 
     function _renderAttributes(Peepo memory peepo) internal pure returns (string memory) {
-        string[] memory keys = new string[](2);
+        string[] memory keys = new string[](3);
         keys[0] = "HUMP SPEED";
         keys[1] = "COLOR";
+        keys[2] = "BACKGROUND";
 
-        string[] memory values = new string[](2);
+        string[] memory values = new string[](3);
         values[0] = peepo.speedName;
         values[1] = peepo.colorName;
+        values[2] = peepo.bgColorName;
 
         string memory attributes = "[";
         string memory separator = ",";
@@ -165,7 +193,7 @@ contract PeepoRenderer is Ownable {
                 Strings.toString(id),
                 '",',
                 '"image": "data:image/svg+xml;base64,',
-                renderPeepo(peepo.speedParam, peepo.colorParam),
+                renderPeepo(peepo.speedParam, peepo.colorParam, peepo.bgColorParam),
                 '","attributes":',
                 _renderAttributes(peepo),
                 "}"

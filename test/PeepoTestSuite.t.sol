@@ -25,7 +25,7 @@ contract PeepoRendererTest is DSTest {
     }
 
     function testRenderPeepo() public view {
-        console.log("peepoRenderer.renderPeepo(150, #ff0000):", renderer.renderPeepoString("150", "#ff0000"));
+        console.log("peepoRenderer.renderPeepo(150, #ff0000):", renderer.renderPeepoString("150", "#ff0000", "#ff0000"));
     }
 
     function testMintSeed() public {

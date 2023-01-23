@@ -26,6 +26,7 @@ contract DeployPeepo is Script {
         if (existingPtr != address(0)) {
             return existingPtr;
         }
+        console.log("Deploying file %s (%s)", path, vm.toString(keccak256(data)));
         vm.startBroadcast(0x9aaC8cCDf50dD34d06DF661602076a07750941F6);
         address ptr = pas.saveAsset(data);
         vm.stopBroadcast();
