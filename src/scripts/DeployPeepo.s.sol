@@ -24,6 +24,7 @@ contract DeployPeepo is Script {
         bytes memory data = vm.readFileBinary(path);
         address existingPtr = pas.assetMapping(keccak256(data));
         if (existingPtr != address(0)) {
+            console.log("File %s - deployed to", path, vm.toString(existingPtr));
             return existingPtr;
         }
         console.log("Deploying file %s (%s)", path, vm.toString(keccak256(data)));
