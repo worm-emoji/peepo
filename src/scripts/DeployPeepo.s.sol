@@ -7,7 +7,7 @@ import "../PeepoToken.sol";
 import "../PeepoAssetStore.sol";
 
 contract DeployPeepo is Script {
-    address public immutable PeepoAssetStoreGoerli = 0xdb80EdF2abCA1942Cedfb8998F804b15C6C803D6;
+    address public immutable PeepoAssetStoreGoerli = 0x48401d483aC88527536755bc7F815a0B63124e2A;
     address public immutable PeepoAssetStoreMainnet = address(0);
 
     function saveOrUseData(string memory path) public returns (address) {
